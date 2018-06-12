@@ -1,6 +1,8 @@
 rm(list=ls())
 
-econ103=function(data, pop.sd, alpha){
+econ103=function(data, pop.sd, alpha)
+  
+{
   
   xbar=mean(data)
   n=length(data)
@@ -14,17 +16,21 @@ econ103=function(data, pop.sd, alpha){
   out=c(lower, upper)
   return(out)
 
-  }
+}
 
-econ103.sim=function(pop.sd, sample.size){
+econ103.sim=function(pop.sd, sample.size)
+  
+{
   
   sim=rnorm(n=sample.size, mean=0, sd=pop.sd)
 
-  }
+}
 
 View(replicate(2000, econ103(econ103.sim(10, 10), 10, 0.1)))
 
-econ103=function(data, alpha){
+econ103=function(data, alpha)
+  
+{
   
   xbar=mean(data)
   n=length(data)
