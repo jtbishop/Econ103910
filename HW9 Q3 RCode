@@ -65,3 +65,10 @@ hist(sample.sd.limits["Upper Limit Sample SD",], main="Upper Sample SD")
 
 #View Matrix
 View(x)
+
+#Proportion of Intervals that Cover True Population Mean
+truth.pop.sd=(pop.sd.limits[1,]<0) & (pop.sd.limits[2,]>0)
+sum(truth.pop.sd)/length(truth.pop.sd)
+                                    
+truth.sample.sd=(sample.sd.limits[1,]<0) & (sample.sd.limits[2,]>0)
+sum(truth.sample.sd)/length(truth.sample.sd)
