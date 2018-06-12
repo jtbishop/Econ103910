@@ -1,6 +1,13 @@
 rm(list=ls())
 
-econ103=function(data, pop.sd, alpha)
+#Random Sample Generator
+
+econ103.sim=function(pop.sd, sample.size)
+	{
+  sim=rnorm(n=sample.size, mean=0, sd=pop.sd)
+	}
+
+econ103.pop.sd=function(data, pop.sd, alpha)
   {
   xbar=mean(data)
   n=length(data)
@@ -15,14 +22,7 @@ econ103=function(data, pop.sd, alpha)
   return(out)
   }
 
-econ103.sim=function(pop.sd, sample.size)
-  {
-  sim=rnorm(n=sample.size, mean=0, sd=pop.sd)
-  }
-
-View(replicate(2000, econ103(econ103.sim(10, 10), 10, 0.1)))
-
-econ103=function(data, alpha)
+econ103.sample.sd=function(data, alpha)
   {
   xbar=mean(data)
   n=length(data)
@@ -37,6 +37,24 @@ econ103=function(data, alpha)
                  
   out=c(lower, upper)
   return(out)
-  }
+	}
 
-View(replicate(2000, econ103(econ103.sim(10, 10), 0.1)))
+pop.sd.limits=replicate(2000, econ103.pop.sd(econ103.sim(10, 10), 10, 0.1))
+row.names(pop.sd.limits)=c("Lower Limit Population SD", "Upper Limit Population SD")
+
+sample.sd.limits=replicate(2000, econ103.sample.sd(econ103.sim(10, 10), 0.1))
+row.names(sample.sd.limits)=c("Lower Limit Sample SD", "Upper Limit Sample SD")
+
+x=rbind(pop.sd.limits, sample.sd.limits)
+
+par(mfrow=c(3, 2))
+
+hist(pop.sd.limits, main="Population SD Limits")
+hist(sample.sd.limits, main="Sample SD Limits")
+hist(pop.sd.limits["Lower Limit Population SD",], main="Lower Population SD")
+hist(pop.sd.limits["Upper Limit Population SD",], main="Upper Population SD")
+hist(sample.sd.limits["Lower Limit Sample SD",], main="Lower Sample SD")
+hist(sample.sd.limits["Upper Limit Sample SD",], main="Upper Sample SD")
+
+
+View(x)
